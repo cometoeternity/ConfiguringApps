@@ -12,28 +12,31 @@ namespace ConfiguringApps
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /*Приложение запускается -> Создаётся экземпляр Startup -> Вызывается метод ConfigureServices ->
+        Вызывается метод Configure -> Начинается обработка запросов*/
+
+        //Создание служб приложения.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Подключение инфраструктуры MVC.
+            services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Настройка конвейера запросов, который представляет собой набор компонентов (middleware, промежуточное ПО),
+        // используемых для обработки входящих HTTP-запросов и генерации ответов на них.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                //Выбор стандартоного пути для MVC
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
