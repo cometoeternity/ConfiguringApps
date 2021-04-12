@@ -1,3 +1,4 @@
+using ConfiguringApps.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +21,9 @@ namespace ConfiguringApps
         {
             //Подключение инфраструктуры MVC.
             services.AddMvc();
+            //Пример службы для отслеживания времени выполнения приложения, которая может выполняться во
+            //всех частях приложения.
+            services.AddSingleton<UptimeService>();
         }
 
         // Настройка конвейера запросов, который представляет собой набор компонентов (middleware, промежуточное ПО),
@@ -29,9 +33,27 @@ namespace ConfiguringApps
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
-            
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+
+            //Обычный для многих приложений порядок промежуточного ПО.
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            // app.UseCookiePolicy();
             app.UseRouting();
+            // app.UseRequestLocalization();
+            // app.UseCors();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            // app.UseSession();
+            // app.UseResponseCompression();
+            // app.UseResponseCaching();
 
             app.UseEndpoints(endpoints =>
             {

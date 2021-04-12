@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ConfiguringApps.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,17 @@ namespace ConfiguringApps.Controllers
 {
     public class HomeController : Controller
     {
-        public ViewResult Index() => View(new Dictionary<string, string> { ["Message"] = "This is the Index action" });
+        private UptimeService uptime;
+
+        public HomeController(UptimeService uptime)
+        {
+            this.uptime = uptime;
+        }
+
+        public ViewResult Index() => View(new Dictionary<string, string> 
+        { 
+            ["Message"] = "This is the Index action",
+            ["Uptime"] = $"{uptime.Uptime}ms"
+        });
     }
 }
