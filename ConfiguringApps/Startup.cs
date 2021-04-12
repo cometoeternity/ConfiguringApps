@@ -30,36 +30,39 @@ namespace ConfiguringApps
         // используемых для обработки входящих HTTP-запросов и генерации ответов на них.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
+            //Использование специального компонента промежуточного ПО
+            app.UseMiddleware<ContentMiddleware>();
 
-            //Обычный для многих приложений порядок промежуточного ПО.
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //    app.UseBrowserLink();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //    app.UseHsts();
+            //}
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            // app.UseCookiePolicy();
-            app.UseRouting();
-            // app.UseRequestLocalization();
-            // app.UseCors();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            // app.UseSession();
-            // app.UseResponseCompression();
-            // app.UseResponseCaching();
+            ////Обычный для многих приложений порядок промежуточного ПО.
 
-            app.UseEndpoints(endpoints =>
-            {
-                //Выбор стандартоного пути для MVC
-                endpoints.MapDefaultControllerRoute();
-            });
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+            //// app.UseCookiePolicy();
+            //app.UseRouting();
+            //// app.UseRequestLocalization();
+            //// app.UseCors();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
+            //// app.UseSession();
+            //// app.UseResponseCompression();
+            //// app.UseResponseCaching();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    //Выбор стандартоного пути для MVC
+            //    endpoints.MapDefaultControllerRoute();
+            //});
         }
     }
 }
