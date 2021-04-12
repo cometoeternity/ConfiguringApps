@@ -30,8 +30,12 @@ namespace ConfiguringApps
         // используемых для обработки входящих HTTP-запросов и генерации ответов на них.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            //Использование промежуточного ПО для обхода.
+            app.UseMiddleware<ShortCircuitMiddleware>();
             //Использование специального компонента промежуточного ПО
             app.UseMiddleware<ContentMiddleware>();
+            
 
             //if (env.IsDevelopment())
             //{
