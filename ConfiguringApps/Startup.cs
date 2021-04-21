@@ -41,15 +41,18 @@ namespace ConfiguringApps
         // различения типов сред, таких как среда разработки и производственная среда.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            ////Использование промежуточного ПО для редактирования ответов
-            //app.UseMiddleware<ErrorMiddleware>();
-            ////Использование промежуточного ПО для редактирования запросов
-            //app.UseMiddleware<BrowserTypeMiddleware>();
-            ////Использование промежуточного ПО для обхода.
-            //app.UseMiddleware<ShortCircuitMiddleware>();
-            ////Использование специального компонента промежуточного ПО
-            //app.UseMiddleware<ContentMiddleware>();
-
+            if((Configuration.GetSection("ShortCircuitMiddleware")?.GetValue<bool>("EnableBrowserShortCircuit")).Value)
+            {
+                ////Использование промежуточного ПО для редактирования ответов
+                //app.UseMiddleware<ErrorMiddleware>();
+                ////Использование промежуточного ПО для редактирования запросов
+                //app.UseMiddleware<BrowserTypeMiddleware>();
+                ////Использование промежуточного ПО для обхода.
+                //app.UseMiddleware<ShortCircuitMiddleware>();
+                ////Использование специального компонента промежуточного ПО
+                //app.UseMiddleware<ContentMiddleware>();
+            }
+            
             //env.ApplicationName = ""; //Это свойство возвращает имя приложения, установленное размещающей платформой
             //env.EnvironmentName = ""; //Это свойство возвращает строку, которвя описывает текущую среду
             //(среду разработки(Development), подготовительную среду (Staging) и
